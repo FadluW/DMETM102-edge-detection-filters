@@ -25,8 +25,10 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 def printCompletedStarting(startMs: int) -> None:
     print(f"Completed in: {bcolors.BOLD}{int(time.time() * 1000) - startMs}{bcolors.ENDC}ms\n")
+
 
 def getImageHistogram(image: MatLike) -> None:
     # https://stackoverflow.com/questions/22159160/python-calculate-histogram-of-image
@@ -34,10 +36,10 @@ def getImageHistogram(image: MatLike) -> None:
     return np.histogram(vals, range(257))
 
 def saveImageHistograms(originalFileName: str):
-    count = 6
-
-    # plt.xlim([-0.5, 255.5])
-    fig, axs = plt.subplots(math.ceil(count / 2.0), 2, sharex=True, sharey=True, layout="constrained")
+    print(f"{bcolors.HEADER}Generating image histograms...{bcolors.ENDC}")
+    startMs = int(time.time() * 1000)
+    count = float(len(os.listdir("./results"))) + 1
+    fig, axs = plt.subplots(math.ceil(count / 2), 2, sharex=True, sharey=True, layout="constrained")
 
     counts, bins = getImageHistogram(cv2.imread(originalFileName))
     axs[0][0].bar(bins[:-1] - 0.5, counts, width=1, edgecolor='none')
@@ -49,11 +51,17 @@ def saveImageHistograms(originalFileName: str):
             continue
 
         counts, bins = getImageHistogram(cv2.imread(filename))
-        axs[figureCount % (count // 2)][figureCount // (count // 2)].bar(bins[:-1] - 0.5, counts, width=1, edgecolor='none')
-        axs[figureCount % (count // 2)][figureCount // (count // 2)].set_title(filename.name)
+        xIndex = int(figureCount // (count // 2))
+        yIndex = int(figureCount % (count // 2))
+
+        axs[xIndex][yIndex].bar(bins[:-1] - 0.5, counts, width=1, edgecolor='none')
+        axs[xIndex][yIndex].set_title(filename.name)
         figureCount += 1
 
+    print(f"{bcolors.OKGREEN}Generated {figureCount} image histograms!{bcolors.ENDC}")
     plt.savefig("image-histograms.png")
+    printCompletedStarting(startMs)
+
 
 def addSaltAndPepperNoise(originalImage: MatLike, noiseRatio = 0.2) -> MatLike:
     print(f"{bcolors.HEADER}Adding salt and pepper...{bcolors.ENDC}")
@@ -70,6 +78,7 @@ def addSaltAndPepperNoise(originalImage: MatLike, noiseRatio = 0.2) -> MatLike:
     printCompletedStarting(startMs)
     return noisyImage
 
+
 def addGaussianNoise(originalImage: MatLike, mean=0, sigma=25) -> MatLike:
     print(f"{bcolors.HEADER}Adding gaussian noise...{bcolors.ENDC}")
     startMs = int(time.time() * 1000)
@@ -79,6 +88,7 @@ def addGaussianNoise(originalImage: MatLike, mean=0, sigma=25) -> MatLike:
 
     printCompletedStarting(startMs)
     return noisyImage
+
 
 def addPoissonNoise(originalImage: MatLike) -> MatLike:
     print(f"{bcolors.HEADER}Adding poisson noise...{bcolors.ENDC}")
@@ -90,6 +100,7 @@ def addPoissonNoise(originalImage: MatLike) -> MatLike:
 
     printCompletedStarting(startMs)
     return noisyImage
+
 
 def addRandomNoise(originalImage: MatLike, intensity=75) -> MatLike:
     print(f"{bcolors.HEADER}Adding random noise...{bcolors.ENDC}")

@@ -25,6 +25,8 @@ os.chdir(targetDirectory)
 # cv2.imwrite("noise-gaussian.jpg", addGaussianNoise(originalImage))
 # cv2.imwrite("noise-poisson.jpg", addPoissonNoise(originalImage))
 # cv2.imwrite("noise-random.jpg", addRandomNoise(originalImage))
+
+# Step back to root directory to generate and save figure with all image histograms
 os.chdir("../")
 saveImageHistograms(originalFileName)
 
