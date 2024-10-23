@@ -16,10 +16,17 @@ def applyAverageFilter(originalImage: MatLike, filterSize=3) -> MatLike:
     return blurredImage
 
 
-def applyAndSaveAllAverageFilter(originalImage: MatLike, targetDirectory: str) -> None:
+def applyToNoisyAndSaveAllAverageFilter(targetDirectory: str) -> None:
+    print(f"{bcolors.HEADER}Passing noisy images through average filters:\n{bcolors.ENDC}")
+
     if not os.path.exists(targetDirectory):
-        os.mkdir(targetDirectory)
+        print(f"{bcolors.FAIL}Target directory doesn't exist!{bcolors.ENDC}")
     
-    cv2.imwrite(f"{targetDirectory}average-filter-3.jpg", applyAverageFilter(originalImage, filterSize=3))
-    cv2.imwrite(f"{targetDirectory}average-filter-5.jpg", applyAverageFilter(originalImage, filterSize=5))
-    cv2.imwrite(f"{targetDirectory}average-filter-9.jpg", applyAverageFilter(originalImage, filterSize=9))
+    for noisyFile in os.scandir(targetDirectory):
+        if not noisyFile.name.startswith("noise"):
+            continue
+        
+        noisyImage = cv2.imread(noisyFile)
+        cv2.imwrite(f"{targetDirectory}average-filter-3-{noisyFile.name}", applyAverageFilter(noisyImage, filterSize=3))
+        cv2.imwrite(f"{targetDirectory}average-filter-5-{noisyFile.name}", applyAverageFilter(noisyImage, filterSize=5))
+        cv2.imwrite(f"{targetDirectory}average-filter-9-{noisyFile.name}", applyAverageFilter(noisyImage, filterSize=9))

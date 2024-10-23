@@ -42,7 +42,7 @@ def saveImageHistograms(originalFileName: str):
         print(f"{bcolors.FAIL}No images in result!{bcolors.ENDC}")
         return
 
-    fig, axs = plt.subplots(math.ceil(count / 2), 2, sharex=True, sharey=True, layout="constrained")
+    fig, axs = plt.subplots(math.ceil(count / 2), 2, sharex=True, layout="compressed", dpi=200, figsize=[9.6, 6.4*count/8])
 
     counts, bins = getImageHistogram(cv2.imread(originalFileName))
     axs[0][0].bar(bins[:-1] - 0.5, counts, width=1, edgecolor='none')
@@ -54,13 +54,13 @@ def saveImageHistograms(originalFileName: str):
             continue
 
         counts, bins = getImageHistogram(cv2.imread(filename))
-        xIndex = int(figureCount // (count // 2))
-        yIndex = int(figureCount % (count // 2))
+        xIndex = int(figureCount % (count // 2))
+        yIndex = int(figureCount // (count // 2))
 
         axs[xIndex][yIndex].bar(bins[:-1] - 0.5, counts, width=1, edgecolor='none')
         axs[xIndex][yIndex].set_title(filename.name)
         figureCount += 1
 
     print(f"{bcolors.OKGREEN}Generated {figureCount} image histograms!{bcolors.ENDC}")
-    plt.savefig("image-histograms.png")
+    plt.savefig("image-histograms.png", dpi=200)
     printCompletedStarting(startMs)
