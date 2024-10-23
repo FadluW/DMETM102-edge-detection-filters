@@ -19,7 +19,7 @@ and saves the results of each into the `./results` folder.
 
 ## Prerequisites
 
-- Python (3.10.4)
+- Python (>=3.10.4)
 - Install Python Modules
     - matplotlib
     - numpy
