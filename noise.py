@@ -4,12 +4,6 @@ import cv2
 
 from util import MatLike, bcolors, printCompletedStarting, getCurrTimeMs
 
-# https://medium.com/@ms_somanna/guide-to-adding-noise-to-your-data-using-python-and-numpy-c8be815df524
-# https://www.askpython.com/python/examples/adding-noise-images-opencv
-# https://www.geeksforgeeks.org/how-to-iterate-over-files-in-directory-using-python/
-# https://matplotlib.org/stable/gallery/lines_bars_and_markers/scatter_star_poly.html#sphx-glr-gallery-lines-bars-and-markers-scatter-star-poly-py
-# https://github.com/scikit-image/scikit-image/blob/main/skimage/util/noise.py#L39-L233
-
 
 def addSaltAndPepperNoise(originalImage: MatLike, noiseRatio = 0.2) -> MatLike:
     print(f"{bcolors.HEADER}Adding salt and pepper...{bcolors.ENDC}")

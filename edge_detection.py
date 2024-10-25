@@ -3,7 +3,7 @@ import os
 
 from util import MatLike, bcolors, getCurrTimeMs, printCompletedStarting
 
-# https://learnopencv.com/edge-detection-using-opencv/#sobel-edge
+
 def applySobelEdgeDetection(originalImage: MatLike, kernelSize=5, blurred=True) -> MatLike:
     print(f"{bcolors.HEADER}Applying Sobel edge detection...{bcolors.ENDC}")
     startMs = getCurrTimeMs()

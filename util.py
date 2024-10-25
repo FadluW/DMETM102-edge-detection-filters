@@ -29,7 +29,6 @@ def printCompletedStarting(startMs: int) -> None:
 
 
 def getImageHistogram(image: MatLike) -> None:
-    # https://stackoverflow.com/questions/22159160/python-calculate-histogram-of-image
     vals = image.mean(axis=2).flatten()
     return np.histogram(vals, range(257))
 

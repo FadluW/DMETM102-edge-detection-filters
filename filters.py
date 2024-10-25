@@ -3,7 +3,7 @@ import cv2
 import os
 from util import MatLike, bcolors, printCompletedStarting, getCurrTimeMs
 
-# https://learnopencv.com/image-filtering-using-convolution-in-opencv/
+
 def applyAverageFilter(originalImage: MatLike, filterSize=3) -> MatLike:
     print(f"{bcolors.HEADER}Applying average filter...{bcolors.ENDC}")
     print(f"{bcolors.HEADER}with filter size: {filterSize}x{filterSize}...{bcolors.ENDC}")
